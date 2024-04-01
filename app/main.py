@@ -4,13 +4,13 @@ from typing import Any
 
 
 class Validator(ABC):
-    def __set_name__(self, inst, name: str) -> None:
+    def __set_name__(self, inst: BurgerRecipe, name: str) -> None:
         self.protected_name = "_" + name
 
-    def __get__(self, inst, inst_type=None) -> int:
+    def __get__(self, inst: BurgerRecipe, inst_type: Any=None) -> int:
         return getattr(inst, self.protected_name)
 
-    def __set__(self, inst, value: Any) -> None:
+    def __set__(self, inst: BurgerRecipe, value: Any) -> None:
         self.validate(value)
         setattr(inst, self.protected_name, value)
 
