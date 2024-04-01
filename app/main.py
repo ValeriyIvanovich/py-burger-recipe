@@ -7,7 +7,7 @@ class Validator(ABC):
     def __set_name__(self, inst: BurgerRecipe, name: str) -> None:
         self.protected_name = "_" + name
 
-    def __get__(self, inst: BurgerRecipe, inst_type: Any=None) -> int:
+    def __get__(self, inst: BurgerRecipe, inst_type: Any = None) -> int:
         return getattr(inst, self.protected_name)
 
     def __set__(self, inst: BurgerRecipe, value: Any) -> None:
