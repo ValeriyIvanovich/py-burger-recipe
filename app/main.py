@@ -4,17 +4,17 @@ from abc import ABC, abstractmethod
 
 class Validator(ABC):
     def __set_name__(self, owner: BurgerRecipe, name: str) -> None:
-        # self.public_name = name
-        self.protected_name = '_' + name
+        self.protected_name = "_" + name
 
-    def __get__(self, instance, owner):
+    def __get__(self, instance: BurgerRecipe, owner: BurgerRecipe) -> str:
         return getattr(instance, self.protected_name)
 
-    def __set__(self, instance: BurgerRecipe, value):
+    def __set__(self, instance: BurgerRecipe, value: int) -> None:
+        self.validate(value)
         setattr(instance, self.protected_name, value)
 
     @abstractmethod
-    def validate(self, value) -> None:
+    def validate(self, value: int) -> None:
         pass
 
 
@@ -23,20 +23,20 @@ class Number(Validator):
         self.min_value = min_value
         self.max_value = max_value
 
-    def validate(self, value) -> None:
+    def validate(self, value: int) -> None:
         if not isinstance(value, int):
             raise TypeError("Quantity should be integer.")
-        if value <= self.min_value or value >= self.max_value:
+        if value < self.min_value or value > self.max_value:
             raise ValueError(f"Quantity should not be less than "
                              f"{self.min_value} and greater than "
                              f"{self.max_value}.")
 
 
 class OneOf(Validator):
-    def __init__(self, options) -> None:
+    def __init__(self, options: tuple) -> None:
         self.options = options
 
-    def validate(self, value) -> None:
+    def validate(self, value: tuple) -> None:
         if value not in self.options:
             raise ValueError(f"Expected {value} to be one of {self.options}.")
 
@@ -47,7 +47,7 @@ class BurgerRecipe:
     tomatoes = Number(0, 3)
     cutlets = Number(1, 3)
     eggs = Number(0, 2)
-    sauce = OneOf(["ketchup", "mayo", "burger"])
+    sauce = OneOf(("ketchup", "mayo", "burger"))
 
     def __init__(self,
                  buns: int,
@@ -55,7 +55,7 @@ class BurgerRecipe:
                  tomatoes: int,
                  cutlets: int,
                  eggs: int,
-                 sauce: str):
+                 sauce: str) -> None:
 
         self.buns = buns
         self.cheese = cheese
@@ -63,10 +63,3 @@ class BurgerRecipe:
         self.cutlets = cutlets
         self.eggs = eggs
         self.sauce = sauce
-
-
-
-if __name__ == "__main__":
-    burger = BurgerRecipe(buns="1", cheese=1, tomatoes=1, cutlets=1, eggs=2, sauce="ketchup")
-    # TypeError: Quantity should be integer.
-    print(burger.__dict__)
