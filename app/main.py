@@ -38,8 +38,8 @@ class OneOf(Validator):
 
     def validate(self, value: str) -> None:
         if value not in self.options:
-            raise ValueError(f"Expected {value} /"
-                             f"to be one of {tuple(self.options)}.")
+            tuppled = tuple(self.options)
+            raise ValueError(f"Expected {value} to be one of {tuppled}.")
 
 
 class BurgerRecipe:
