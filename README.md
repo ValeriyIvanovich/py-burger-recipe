@@ -13,12 +13,12 @@ cheese_burger = Burger(buns=2, cheese=2, tomatoes=1, cutlets=1, eggs=1, sauce="k
 
 You can make burgers with a different number of ingredients and different sauces, for example:
 
-- `buns` — can range from `2` to `3`;
+- `buns`  - can range from `2` to `3`;
 - `cheese` — can range from `0` to `2`;
 - `tomatoes` — can range from `0` to `3`;
 - `cutlets` — can range from `1` to `3`;
-- `eggs` — can range from `0` to `2`;
-- `sauce` — can be `ketchup`, `mayo`, or `burger`.
+- `eggs` — can range from `0` to `2';
+- `sauce` — can be `ketchup`, `mayo`, or `burger`
 
 So, it would be convenient to use descriptors to ensure that the number of ingredients is `int` in a range mentioned above 
 and the sauce is one of `ketchup`, `mayo`, or `burger`.
@@ -27,9 +27,10 @@ The main task is to create the `BurgerRecipe` class, and for convenience, you sh
 
 Implement the `Validator` class that will have such methods:
 
-- the `__set_name__` method, which accepts the name of the attribute, adds `_` to its beginning, and stores it in the `protected_name` attribute;
-- the `__get__` method that returns the attribute value;
-- the `__set__` method, which sets the attribute value (**note** that there should be no validation implemented, you should only call it there);
+- the `__set_name__` method, which accepts the name of the attribute, adds `_` to its beginning, and storesattribute;
+- the `__get__` method that returns the attribute value; it in the `protected_name` 
+- the `__set__` method, which sets the attribute value (**note** that there descriptors should be created as class attributes.
+, you should only call it there);
 - the `validate` abstract method, which accepts the `value`.
 
 Also, you need to implement the `Number` class, which is the `Validator` child class. It should have:
