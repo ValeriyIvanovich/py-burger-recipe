@@ -43,7 +43,6 @@ class OneOf(Validator):
 
 
 class BurgerRecipe:
-    pass
     buns = Number(2, 3)
     cheese = Number(0, 2)
     tomatoes = Number(0, 3)
