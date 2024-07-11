@@ -1,4 +1,8 @@
-class Validator:
+from abc import ABC, abstractmethod
+from typing import Any
+
+
+class Validator(ABC):
     def __set_name__(self, owner: type, name: str) -> None:
         self.protected_name = "_" + name
 
@@ -9,28 +13,8 @@ class Validator:
         self.validate(value)
         setattr(instance, self.protected_name, value)
 
-    def validate(self, value: Any) -> None:
-        pass
-
-
-
-Memory updated
-Конечно, вот полный код на Python без импортов, с соблюдением правил PEP8 и с аннотациями типов:
-
-python
-Copy code
-class Validator:
-    def __set_name__(self, owner: type, name: str) -> None:
-        self.protected_name = "_" + name
-
-    def __get__(self, instance: object, owner: type) -> Any:
-        return getattr(instance, self.protected_name)
-
-    def __set__(self, instance: object, value: Any) -> None:
-        self.validate(value)
-        setattr(instance, self.protected_name, value)
-
-    def validate(self, value: Any) -> None:
+    @abstractmethod
+    def validate(self, value: None) -> None:
         pass
 
 
@@ -49,7 +33,6 @@ class Number(Validator):
             )
 
 
-
 class OneOf(Validator):
     def __init__(self, *options: str) -> None:
         self.options = options
@@ -57,7 +40,6 @@ class OneOf(Validator):
     def validate(self, value: Any) -> None:
         if value not in self.options:
             raise ValueError(f"Expected {value} to be one of {self.options}.")
-
 
 
 class BurgerRecipe:
@@ -83,4 +65,3 @@ class BurgerRecipe:
         self.cutlets = cutlets
         self.eggs = eggs
         self.sauce = sauce
-
