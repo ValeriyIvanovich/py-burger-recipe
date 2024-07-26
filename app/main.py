@@ -8,7 +8,11 @@ class Validator(ABC):
         self.public_name = name
         self.protected_name = "_" + name
 
-    def __get__(self, instance: BurgerRecipe, owner: BurgerRecipe) -> int | str:
+    def __get__(
+            self,
+            instance: BurgerRecipe,
+            owner: BurgerRecipe
+    ) -> int | str:
         return getattr(instance, self.protected_name)
 
     def __set__(self, instance: BurgerRecipe, value: int | str) -> None:
