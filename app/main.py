@@ -52,8 +52,14 @@ class BurgerRecipe:
     eggs = Number(0, 2)
     sauce = OneOf("ketchup", "mayo", "burger")
 
-    def __init__(self, cheese: int, tomatoes: int,
-                 cutlets: int, eggs: int, buns: int, sauce: str) -> None:
+    def __init__(self,
+             buns: int,
+             cheese: int,
+             tomatoes: int,
+             cutlets: int,
+             eggs: int,
+             sauce: str
+             ) -> None:
         self.cheese = cheese
         self.tomatoes = tomatoes
         self.cutlets = cutlets
