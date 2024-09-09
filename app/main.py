@@ -9,6 +9,7 @@ class Validator(ABC):
         return getattr(obj, self.protected_name)
 
     def __set__(self, obj: object, value: int | str) -> None:
+        self.validate(value)
         setattr(obj, self.protected_name, value)
 
     @abstractmethod
@@ -36,7 +37,9 @@ class OneOf(Validator):
 
     def validate(self, value: str) -> None:
         if value not in self.options:
-            raise ValueError(f"Expected {value} to be one of {self.options}.")
+            raise ValueError(f"Expected {value} to be one of "
+                             f"{str(self.options).replace
+                                ("[", "(").replace("]", ")")}.")
 
 
 class BurgerRecipe:
