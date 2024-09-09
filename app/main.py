@@ -37,9 +37,8 @@ class OneOf(Validator):
 
     def validate(self, value: str) -> None:
         if value not in self.options:
-            raise ValueError(f"Expected {value} to be one of "
-                             f"{str(self.options).replace
-                                ("[", "(").replace("]", ")")}.")
+            raise ValueError(f"Expected {value} "
+                             f"to be one of ('{"', '".join(self.options)}').")
 
 
 class BurgerRecipe:
