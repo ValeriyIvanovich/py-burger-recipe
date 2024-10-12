@@ -3,13 +3,13 @@ from abc import ABC, abstractmethod
 
 class Validator(ABC):
 
-    def __set_name__(self, instance, name: str) -> None:
+    def __set_name__(self, instance: object, name: str) -> None:
         self.protected_name = f"_{name}"
 
-    def __get__(self, instance, owner) -> str:
+    def __get__(self, instance: object, owner: object) -> str:
         return getattr(instance, self.protected_name)
 
-    def __set__(self, instance, value: int | str) -> None:
+    def __set__(self, instance: object, value: int | str) -> None:
         self.validate(value)
         setattr(instance, self.protected_name, value)
 
@@ -35,7 +35,7 @@ class Number(Validator):
 
 class OneOf(Validator):
 
-    def __init__(self, options: list | tuple) -> None:
+    def __init__(self, *options: str) -> None:
         self.options = options
 
     def validate(self, value: int) -> None:
@@ -49,7 +49,7 @@ class BurgerRecipe:
     tomatoes = Number(0, 3)
     cutlets = Number(1, 3)
     eggs = Number(0, 2)
-    sauce = OneOf(("ketchup", "mayo", "burger"))
+    sauce = OneOf("ketchup", "mayo", "burger")
 
     def __init__(self,
                  buns: int,
